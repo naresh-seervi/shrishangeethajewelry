@@ -42,7 +42,7 @@ MIDDLEWARE = [
 ]
 
 
-ROOT_URLCONF = 'srisangeethajewels.urls'
+ROOT_URLCONF = 'shrishangeethajewelry.urls'
 
 
 TEMPLATES = [
@@ -62,7 +62,7 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'srisangeethajewels.wsgi.application'
+WSGI_APPLICATION = 'shrishangeethajewelry.wsgi.application'
 
 
 # ✅ POSTGRESQL DATABASE (Railway)
