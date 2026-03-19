@@ -8,10 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-secret-key')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://srisangeethajewels.onrender.com']
+ALLOWED_HOSTS = ['shrishangeethajewelry.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://shrishangeethajewelry.onrender.com']
 
 
 # INSTALLED APPS
