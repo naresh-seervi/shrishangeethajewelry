@@ -2,6 +2,16 @@ from pathlib import Path
 import os
 import dj_database_url
 
+
+import cloudinary
+
+cloudinary.config(
+    cloud_name = 'jewels',
+    api_key = '642363962377174',
+    api_secret = 'Nu_FiHKTzdAcNTskmW6nPb1-H6c'
+)
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
@@ -22,11 +32,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
     'jewels',
     'crispy_forms',
     'crispy_bootstrap5',
+
+    'cloudinary',
+    'cloudinary_storage',
 ]
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # MIDDLEWARE
