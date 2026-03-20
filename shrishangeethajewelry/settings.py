@@ -4,12 +4,14 @@ import dj_database_url
 
 
 import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
-cloudinary.config(
-    cloud_name = 'jewels',
-    api_key = '642363962377174',
-    api_secret = 'Nu_FiHKTzdAcNTskmW6nPb1-H6c'
-)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'jewels',
+    'API_KEY': '642363962377174',
+    'API_SECRET': 'Nu_FiHKTzdAcNTskmW6nPb1-H6c',
+}
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
