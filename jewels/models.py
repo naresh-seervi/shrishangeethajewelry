@@ -43,7 +43,8 @@ class Item(models.Model):
     ]
 
     name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='items/')
+    #image = models.ImageField(upload_to='items/')
+    image = models.ImageField(upload_to='products/')
     #video_file = models.FileField(upload_to='videos/')
     weight = models.DecimalField(max_digits=10, decimal_places=3)
     item_type = models.CharField(max_length=10, choices=ITEM_TYPE_CHOICES)
