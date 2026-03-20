@@ -7,11 +7,19 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+cloudinary.config(
+    cloud_name = 'jewels',
+    api_key = '642363962377174',
+    api_secret = 'Nu_FiHKTzdAcNTskmW6nPb1-H6c'
+)
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'jewels',
     'API_KEY': '642363962377174',
     'API_SECRET': 'Nu_FiHKTzdAcNTskmW6nPb1-H6c',
 }
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +50,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 ]
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 
 # MIDDLEWARE
@@ -118,8 +126,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # MEDIA FILES
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
