@@ -10,15 +10,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ================= CLOUDINARY =================
 cloudinary.config(
-    cloud_name='jewels',
-    api_key='642363962377174',
-    api_secret='Nu_FiHKTzdAcNTskmW6nPb1-H6c'
+    cloud_name='jewelry',
+    api_key='645647234225678',
+    api_secret='EtDZyMCK015ehOvMzGGEQOYeGLw'
 )
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'jewels',
-    'API_KEY': '642363962377174',
-    'API_SECRET': 'Nu_FiHKTzdAcNTskmW6nPb1-H6c',
+    'CLOUD_NAME': 'jewelry',
+    'API_KEY': '645647234225678',
+    'API_SECRET': 'EtDZyMCK015ehOvMzGGEQOYeGLw',
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
