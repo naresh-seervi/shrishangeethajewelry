@@ -13,13 +13,7 @@ cloudinary.config(
     api_secret = 'Nu_FiHKTzdAcNTskmW6nPb1-H6c'
 )
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'jewels',
-    'API_KEY': '642363962377174',
-    'API_SECRET': 'Nu_FiHKTzdAcNTskmW6nPb1-H6c',
-}
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,7 +45,13 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'jewels',
+    'API_KEY': '642363962377174',
+    'API_SECRET': 'Nu_FiHKTzdAcNTskmW6nPb1-H6c',
+}
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # MIDDLEWARE
 MIDDLEWARE = [
