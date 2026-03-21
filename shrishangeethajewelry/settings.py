@@ -2,48 +2,18 @@ from pathlib import Path
 import os
 import dj_database_url
 
-
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-cloudinary.config(
-    cloud_name = 'jewels',
-    api_key = '642363962377174',
-    api_secret = 'Nu_FiHKTzdAcNTskmW6nPb1-H6c'
-)
-
-
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
-SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-secret-key')
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-DEBUG = False
-
-ALLOWED_HOSTS = ['shrishangeethajewelry.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://shrishangeethajewelry.onrender.com']
-
-
-# INSTALLED APPS
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
-    'jewels',
-    'crispy_forms',
-    'crispy_bootstrap5',
-
-    'cloudinary',
-    'cloudinary_storage',
-]
+# ================= CLOUDINARY =================
+cloudinary.config(
+    cloud_name='jewels',
+    api_key='642363962377174',
+    api_secret='Nu_FiHKTzdAcNTskmW6nPb1-H6c'
+)
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'jewels',
@@ -53,7 +23,36 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# MIDDLEWARE
+
+# ================= SECURITY =================
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-secret-key')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+DEBUG = False
+
+ALLOWED_HOSTS = ['shrishangeethajewelry.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://shrishangeethajewelry.onrender.com']
+
+
+# ================= INSTALLED APPS =================
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    'jewels',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+    'cloudinary',
+    'cloudinary_storage',
+]
+
+
+# ================= MIDDLEWARE =================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -69,6 +68,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'shrishangeethajewelry.urls'
 
 
+# ================= TEMPLATES =================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -89,7 +89,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'shrishangeethajewelry.wsgi.application'
 
 
-# ✅ POSTGRESQL DATABASE (Railway)
+# ================= DATABASE =================
 DATABASES = {
     'default': dj_database_url.parse(
         "postgresql://postgres:KTVuFEZklJpovlbHdIsznsSnXwPSHerZ@mainline.proxy.rlwy.net:41112/railway",
@@ -99,7 +99,7 @@ DATABASES = {
 }
 
 
-# PASSWORD VALIDATION
+# ================= PASSWORD =================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -108,40 +108,37 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# INTERNATIONAL
+# ================= INTERNATIONAL =================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
 
-# STATIC FILES
+# ================= STATIC =================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# MEDIA FILES
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# ❌ MEDIA SETTINGS REMOVE (IMPORTANT)
+# MEDIA_URL / MEDIA_ROOT NOT NEEDED
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# CUSTOM USER
+# ================= CUSTOM USER =================
 AUTH_USER_MODEL = 'jewels.CustomUser'
 
 
-# CRISPY
+# ================= CRISPY =================
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
-# EMAIL
+# ================= EMAIL =================
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -150,7 +147,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 
-# LOGIN
+# ================= LOGIN =================
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
