@@ -323,19 +323,28 @@ def manage_rates(request):
 def manage_items(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
+
         if form.is_valid():
-            item = form.save()
+            item = form.save(commit=False)  # 🔥 CHANGE HERE
+
+            # force save to trigger cloudinary
+            if request.FILES.get('image'):
+                item.image = request.FILES['image']
+
             item.price = item.calculate_price()
-            item.save()
+            item.save()  # 🔥 IMPORTANT
+
+            # extra images
             for idx, f in enumerate(request.FILES.getlist('extra_images', [])):
                 ItemImage.objects.create(item=item, image=f, order=idx)
+
             messages.success(request, 'Item added successfully!')
             return redirect('manage_items')
     else:
         form = ItemForm()
+
     items = Item.objects.all().order_by('-created_at').prefetch_related('extra_images')
     return render(request, 'jewels/manage_items.html', {'form': form, 'items': items})
-
 
 @login_required
 @admin_required
