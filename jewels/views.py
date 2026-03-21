@@ -284,39 +284,48 @@ def admin_dashboard(request):
 
 @login_required
 @admin_required
-def manage_rates(request):
+import cloudinary.uploader
+
+@login_required
+@admin_required
+def manage_items(request):
     if request.method == 'POST':
-        form = RateForm(request.POST)
+        form = ItemForm(request.POST, request.FILES)
+
         if form.is_valid():
-            from django.utils import timezone
-            rate_type = form.cleaned_data['rate_type']
-            per_gram_rate = form.cleaned_data['per_gram_rate']
-            today = timezone.now().date()
-            
-            existing_rate = Rate.objects.filter(rate_type=rate_type, date=today).first()
-            if existing_rate:
-                existing_rate.per_gram_rate = per_gram_rate
-                existing_rate.save()
-                rate = existing_rate
-            else:
-                rate = Rate.objects.create(
-                    rate_type=rate_type,
-                    per_gram_rate=per_gram_rate,
-                    date=today
+            item = form.save(commit=False)
+
+            # 🔥 LOCAL → CLOUDINARY upload
+            if request.FILES.get('image'):
+                result = cloudinary.uploader.upload(
+                    request.FILES['image'],
+                    folder="products"   # ✅ ye tumhara upload_to ka replacement hai
                 )
-            
-            items = Item.objects.filter(item_type=rate.rate_type, is_active=True)
-            for item in items:
-                item.price = item.weight * rate.per_gram_rate
-                item.save()
-            
-            messages.success(request, f'{rate.rate_type.capitalize()} rate updated successfully!')
-            return redirect('manage_rates')
+                item.image = result['secure_url']
+
+            item.price = item.calculate_price()
+            item.save()
+
+            # extra images
+            for idx, f in enumerate(request.FILES.getlist('extra_images')):
+                extra = cloudinary.uploader.upload(f, folder="products/extras")
+
+                ItemImage.objects.create(
+                    item=item,
+                    image=extra['secure_url'],
+                    order=idx
+                )
+
+            messages.success(request, 'Item added successfully!')
+            return redirect('manage_items')
     else:
-        form = RateForm()
-    
-    rates = Rate.objects.all().order_by('-date')
-    return render(request, 'jewels/manage_rates.html', {'form': form, 'rates': rates})
+        form = ItemForm()
+
+    items = Item.objects.all().order_by('-created_at')
+    return render(request, 'jewels/manage_items.html', {
+        'form': form,
+        'items': items
+    })
 
 
 @login_required
