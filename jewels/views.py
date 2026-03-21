@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import CustomUser, Item, Cart, Order, OrderItem, Rate, ItemImage
 from .forms import CustomUserCreationForm, LoginForm, OTPVerifyForm, ItemForm, RateForm, OrderForm
+import cloudinary.uploader
 
 
 
@@ -325,18 +326,28 @@ def manage_items(request):
         form = ItemForm(request.POST, request.FILES)
 
         if form.is_valid():
-            item = form.save(commit=False)  # 🔥 CHANGE HERE
+            item = form.save(commit=False)
 
-            # force save to trigger cloudinary
+            # 🔥 MAIN IMAGE upload to Cloudinary
             if request.FILES.get('image'):
-                item.image = request.FILES['image']
+                upload_result = cloudinary.uploader.upload(
+                    request.FILES['image']
+                )
+                item.image = upload_result['secure_url']  # ✅ URL save
 
             item.price = item.calculate_price()
-            item.save()  # 🔥 IMPORTANT
+            item.save()
 
-            # extra images
-            for idx, f in enumerate(request.FILES.getlist('extra_images', [])):
-                ItemImage.objects.create(item=item, image=f, order=idx)
+            # 🔥 EXTRA IMAGES upload
+            extra_images = request.FILES.getlist('extra_images')
+            for idx, img in enumerate(extra_images):
+                extra_upload = cloudinary.uploader.upload(img)
+
+                ItemImage.objects.create(
+                    item=item,
+                    image=extra_upload['secure_url'],  # ✅ URL save
+                    order=idx
+                )
 
             messages.success(request, 'Item added successfully!')
             return redirect('manage_items')
@@ -344,7 +355,11 @@ def manage_items(request):
         form = ItemForm()
 
     items = Item.objects.all().order_by('-created_at').prefetch_related('extra_images')
-    return render(request, 'jewels/manage_items.html', {'form': form, 'items': items})
+    return render(request, 'jewels/manage_items.html', {
+        'form': form,
+        'items': items
+    })
+
 
 @login_required
 @admin_required
